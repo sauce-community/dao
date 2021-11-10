@@ -1,7 +1,7 @@
 {
-  "name": "simple-react-full-stack",
+  "name": "oss",
   "version": "1.0.0",
-  "description": "Boilerplate to build a full stack web application using React, Node.js, Express and Webpack.",
+  "description": "OSS Website.",
   "main": "src/server/index.js",
   "scripts": {
     "build": "webpack --mode production",
