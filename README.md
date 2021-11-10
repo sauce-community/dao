@@ -4,10 +4,10 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/crsandeep/simple-react-full-stack
+git clone https://github.com/noahdahlman/dao
 
 # Go inside the directory
-cd simple-react-full-stack
+cd dao
 
 # Install dependencies
 yarn (or npm install)
