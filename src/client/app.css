@@ -17,6 +17,8 @@ body{
   background-size:  cover;
   background-repeat: no-repeat;
   background-position: right 10px top 10px;
+  background-color: rgb(18, 18, 18);
+  color:white;
 }
 *{
     -ms-overflow-style: none;

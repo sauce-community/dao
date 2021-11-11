@@ -9,8 +9,8 @@ export default class VoteCard extends Component {
           "grid grid-cols-4 gap-4 justify-center p-8 p-4"
         }
       >
-        <div className={"border-solid border-4 border-blue-200 rounded-lg"}>
-          <h1 style={{ fontSize: "32px" }} className={"pt-12"}>
+        <div className={"border-solid border-4 border-white rounded-lg"}>
+          <h1 style={{ fontSize: "32px" }} className={"p-12"}>
             {this.props.name}
           </h1>
           <img src={this.props.logo} style={{ width: "100%"}} alt="Logo" />
