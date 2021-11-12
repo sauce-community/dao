@@ -2,29 +2,29 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-
-html, body{
+html,
+body {
   padding: 0;
   margin: 0;
   text-align: center;
 }
-html{
+html {
   height: 100%;
 }
-body{
+body {
   min-height: 100%;
   max-width: 100%;
   background-color: rgb(18, 18, 18);
-  color:white;
+  color: white;
 }
-*{
-    -ms-overflow-style: none;
+* {
+  -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
-.nav{
+.nav {
   z-index: 2;
   min-width: 100%;
 }
