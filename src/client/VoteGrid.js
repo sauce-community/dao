@@ -11,14 +11,14 @@ Nunc blandit laoreet tincidunt. `;
     return (
       <div
         className={
-          "grid grid-cols-1 xl:grid-cols-4 m-4 mt-48 xl:mt-32 gap-4 h-screen justify-center animate__animated animate__fadeIn"
+          "grid grid-cols-1 xl:grid-cols-4 m-4 mt-64 gap-8 h-screen justify-center animate__animated animate__fadeIn"
         }
       >
-        <VoteCard logo={company1logo} name="Square Inc." text={company1text} />
+        <VoteCard logo={company1logo} name="Square Inc." />
         <VoteInfo text={company1text} />
-        <VoteCard logo={company1logo} name="Square Inc." text={company1text} />
+        <VoteCard logo={company1logo} name="Square Inc." />
         <VoteInfo text={company1text} />
-        <VoteCard logo={company1logo} name="Square Inc." text={company1text} />
+        <VoteCard logo={company1logo} name="Square Inc." />
         <VoteInfo text={company1text} />
       </div>
     );

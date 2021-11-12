@@ -9,7 +9,7 @@ export default class Header extends Component {
         </h1>
         <button
           className={
-            "col-start-4 col-end-6 md:col-start-6 md:col-end-7 border-solid border-4 border-white rounded-lg p-4"
+            "col-start-5 col-end-7 md:col-start-6 md:col-end-7 border-solid border-4 border-white rounded-xl p-4"
           }
         >
           Connect Wallet

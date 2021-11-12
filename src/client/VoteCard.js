@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export default class VoteCard extends Component {
   render() {
     return (
-      <div className={"border-solid border-2 border-white rounded-lg p-8"}>
+      <div className={"border-solid border-2 border-white rounded-xl p-8"}>
         <h1 style={{ fontSize: "32px" }} className={"p-8"}>
           {this.props.name}
         </h1>

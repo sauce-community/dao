@@ -3,14 +3,14 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      backgroundImage: {
-        // 'background': "url('img/img2.png')"
-      }
-
+      backgroundImage: {},
+      borderRadius: {
+        xl: "2rem",
+      },
     },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};
