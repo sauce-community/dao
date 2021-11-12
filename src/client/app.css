@@ -14,9 +14,6 @@ html{
 body{
   min-height: 100%;
   max-width: 100%;
-  background-size:  cover;
-  background-repeat: no-repeat;
-  background-position: right 10px top 10px;
   background-color: rgb(18, 18, 18);
   color:white;
 }
@@ -29,14 +26,5 @@ body{
 
 .nav{
   z-index: 2;
-  min-width: 100%;
-}
-
-
-#gif{
-  align-self: right;
-}
-
-#animation{
   min-width: 100%;
 }
