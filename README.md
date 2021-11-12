@@ -4,7 +4,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/noahdahlman/dao
+git clone https://github.com/oss-community/dao
 
 # Go inside the directory
 cd dao
