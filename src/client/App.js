@@ -14,7 +14,7 @@ export default class App extends Component {
         <Router>
           <Home path="/" />
           <Vote path="vote" />
-          <About path="about" />
+          <Propose path="propose" />
         </Router>
       </div>
     );
@@ -51,6 +51,32 @@ function Vote() {
   );
 }
 
-function About() {
-  return <h2>About</h2>;
+function Propose() {
+  return (
+    <div>
+      <Header />
+      <div className={"grid grid-cols-8 gap-4"}>
+        <div className="flex flex-col h-screen bg-black fixed items-center p-2 space-y-12">
+          {/* <Link/> */}
+          <div className={"flex-grow"}></div>
+          <Link to="/vote">
+            <i style={{ fontSize: "32px" }} className={"bi bi-bank m-2"}></i>
+          </Link>
+          <Link to="/">
+            <i style={{ fontSize: "32px" }} className={"bi bi-house m-2"}></i>
+          </Link>
+          <Link to="/propose">
+            <i
+              style={{ fontSize: "32px" }}
+              className={"bi bi-pencil-square m-2"}
+            ></i>
+          </Link>
+          <div className={"flex-grow"}></div>
+        </div>
+        <div className={"col-start-2 col-end-9"}>
+          <p>Content</p>
+        </div>
+      </div>
+    </div>
+  );
 }
