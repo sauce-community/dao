@@ -15,7 +15,7 @@ Nunc blandit laoreet tincidunt. Maecenas ultrices maximus risus non vulputate. A
 
     return (
       <div id={"App"} className={"h-screen"}>
-        <Header/>
+        <Header />
 
         <div
           className={
