@@ -11,7 +11,7 @@ Nunc blandit laoreet tincidunt. `;
     return (
       <div
         className={
-          "grid grid-cols-1 md:grid-cols-4 gap-4 h-screen justify-center m-4 mt-48 md:mt-32 animate__animated animate__fadeIn"
+          "grid grid-cols-1 xl:grid-cols-4 m-4 mt-48 xl:mt-32 gap-4 h-screen justify-center animate__animated animate__fadeIn"
         }
       >
         <VoteCard logo={company1logo} name="Square Inc." text={company1text} />
