@@ -1721,6 +1721,11 @@ bonjour@^3.5.0:
     multicast-dns "^6.0.1"
     multicast-dns-service-types "^1.1.0"
 
+bootstrap-icons@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.7.0.tgz#856afbfe35287a71638d9a1b96f67faf72bbb1b6"
+  integrity sha512-x2ORQ3lv1QdSnIzzQdU8mf83fbCq4FIaUinrAWw+a/d186vO3Ph7qUfqzvQDBA41AD6IoxdRHD6zUt9IXC1J6A==
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz"

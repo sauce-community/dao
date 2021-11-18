@@ -13,6 +13,7 @@ body {
   height: 100%;
   background-color: rgb(18, 18, 18);
   color: white;
+  text-align: center;
 }
 
 a {
@@ -27,4 +28,9 @@ a {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.vote-image {
+  max-width: 128px;
+  max-height: 128px;
 }
