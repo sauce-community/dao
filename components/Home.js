@@ -5,22 +5,31 @@ const Home = () => {
     <div>
       <Header />
       <div className="grid grid-cols-8 gap-4">
-        <div className="flex flex-col h-screen bg-black fixed items-center p-2 space-y-12">
+        <aside
+          data-testid="aside-nav-bar"
+          className="flex flex-col h-screen bg-black fixed items-center p-2 space-y-12"
+        >
           <div className="flex-grow"></div>
           <Link href="/vote">
-            <i style={{ fontSize: "32px" }} className="bi bi-bank m-2"></i>
+            <a>
+              <i style={{ fontSize: "32px" }} className="bi bi-bank m-2"></i>
+            </a>
           </Link>
           <Link href="/">
-            <i style={{ fontSize: "32px" }} className="bi bi-house m-2"></i>
+            <a>
+              <i style={{ fontSize: "32px" }} className="bi bi-house m-2"></i>
+            </a>
           </Link>
           <Link href="/propose">
-            <i
-              style={{ fontSize: "32px" }}
-              className="bi bi-pencil-square m-2"
-            ></i>
+            <a>
+              <i
+                style={{ fontSize: "32px" }}
+                className="bi bi-pencil-square m-2"
+              ></i>
+            </a>
           </Link>
           <div className="flex-grow"></div>
-        </div>
+        </aside>
         <div className="flex items-center col-start-2 col-end-9 mt-48">
           <div className="space-y-12 p-8 md:p-12 md:pr-24">
             <p>Welcome Home</p>
