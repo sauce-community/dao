@@ -7,7 +7,8 @@ app.get("/", (req, res) => {
   res.send("foo");
 });
 
-app.use("/", require(""));
+app.use("/applications", require("./applications/applications"));
+app.use("/projects", require("./projects/projects"));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
