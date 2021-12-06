@@ -5,9 +5,9 @@ const ObjectId = Schema.ObjectId;
 
 const applicationSchema = new Schema({
   applicantName: String,
-  date: Date.now(),
+  date: String,
   skills: Array,
-  portfolio: String, // presuming its a link.
+  portfolio: String,
 });
-
+// presuming the portfolio thing is a link.
 module.exports = mongoose.model("Application", applicationSchema);
