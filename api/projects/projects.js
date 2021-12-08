@@ -67,7 +67,26 @@ router.put("/updateProject/convertApplicantToMember", async (req, res) => {
 });
 
 router.delete("/deleteProject/:projectId", (req, res) => {
-  // presumably need authorization from many people to do this
+  let authorizedUser = req.body.authorizedUser;
+  let signedAuth = req.body.signedAuth;
+  db.Projects.findOneAndDelete(
+    {
+      projectOwner: authorizedUser,
+      authLine: signedAuth,
+    },
+    function (err, deleted) {
+      if (err) {
+        res
+          .status(400)
+          .send("failed to delete -- are you authorized to do this?");
+      }
+      if (deleted) {
+        tx.send("mark_project_as_depreciated").then((success) => {
+          res.status(200).send();
+        });
+      }
+    }
+  );
 });
 
 module.exports = router;
