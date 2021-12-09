@@ -8,6 +8,7 @@ module.exports = {
   User: require("./models/User.model"),
   Application: require("./models/Application.model"),
   Project: require("./models/Project.model"),
+  Proposal: require("./models/Proposal.model"),
 };
 
 function isValidId(id) {
