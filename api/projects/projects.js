@@ -18,7 +18,7 @@ router.get("/viewAllProjects", (req, res) => {
 router.get("/viewProjectApplicants/:id", (req, res) => {
   // view list of all the project's applicants
   // TODO: review and test this route
-  let projectId = req.params.id;
+  let projectId = req.query.id;
   db.Project.findOne({ _id: projectId }).then((project) => {
     let projectApplicants = project.applicants;
     res.status(200).json(projectApplicants);
@@ -65,7 +65,13 @@ router.put("/editProject", (req, res) => {
     {
       new: true,
     }
-  ).then();
+  )
+    .then((newDoc) => {
+      res.status(200).json(newDoc);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.put("/voteOnProject/:id", (req, res) => {

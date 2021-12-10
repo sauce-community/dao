@@ -8,7 +8,7 @@ const projectSchema = new Schema({
   externalId: Number,
   name: String,
   description: String,
-  createdAt: Date,
+  createdOn: Date,
   projectOwner: String,
   members: [{ type: String }],
   applicants: [{ type: String }],
