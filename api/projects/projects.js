@@ -5,10 +5,14 @@ const db = require("../db");
 
 // #11 - View Projects Page
 router.get("/viewAllProjects", (req, res) => {
-  // get all projects in the db (all) and return them showing their data.
-  db.Project.find({}).then((projects) => {
-    res.status(200).json(projects);
-  });
+  // get projects from the db return them showing their data.
+  let startedAt = req.body.startedAt; // for pagination.
+  db.Project.find({ createdOn: { $lte: startedAt } })
+    .sortBy("-createdOn")
+    .limit(20)
+    .then((projects) => {
+      res.status(200).json(projects);
+    });
 });
 
 router.get("/viewProjectApplicants/:id", (req, res) => {
