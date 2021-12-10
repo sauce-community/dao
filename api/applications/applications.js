@@ -8,8 +8,7 @@ router.get("/:application", (req, res) => {
   // allow user to check the status of his application to a project
 });
 
-router.get("/project/:projectId", (req, res) => {
-  // get project by id
+router.post("/:application", (req, res) => {
   //
 });
 

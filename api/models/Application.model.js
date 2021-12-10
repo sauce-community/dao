@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const applicationSchema = new Schema({
+  externalId: Number,
   applicantName: String,
   date: String,
   skills: Array,

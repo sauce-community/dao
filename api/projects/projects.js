@@ -3,7 +3,8 @@ const router = express.Router();
 
 const db = require("../db");
 
-router.get("/viewAllProjects/", (req, res) => {
+// #11 - View Projects Page
+router.get("/viewAllProjects", (req, res) => {
   // get all projects in the db (all) and return them showing their data.
   db.Project.find({}).then((projects) => {
     res.status(200).json(projects);
@@ -12,6 +13,7 @@ router.get("/viewAllProjects/", (req, res) => {
 
 router.get("/viewProjectApplicants/:id", (req, res) => {
   // view list of all the project's applicants
+  // TODO: review and test this route
   let projectId = req.params.id;
   db.Project.findOne({ _id: projectId }).then((project) => {
     let projectApplicants = project.applicants;
@@ -19,37 +21,65 @@ router.get("/viewProjectApplicants/:id", (req, res) => {
   });
 });
 
-router.post("/createProject/:founder", async (req, res) => {
+// #12 Create Project
+router.post("/createProject", async (req, res) => {
   // it takes a founder or founder(s) to make a project
-  let founder = req.params.founder;
+  let founder = req.body.founder;
   let name = req.body.name;
   let description = req.body.description;
-  let newProject = await db.Projects.create({
-    _id: projectId,
+  console.log(founder, name, description, 29);
+  let newProject = await db.Project.create({
+    name: name,
+    description: description,
+    projectOwner: founder,
     members: founder,
     applicants: [],
-    description: description,
     signatures: [],
+    createdAt: Date.now(),
   });
   newProject.save();
-  res.status(200).send("project created successfully by ", founder);
+  const success = "project created successfully by " + founder;
+  res.status(200).send(success);
+});
+
+// #13 Edit Project
+
+router.put("/editProject", (req, res) => {
+  let id = req.body._id;
+  let description = req.body.description;
+  let remainingMembers = req.body.remainingMembers;
+  let remainingApplicants = req.body.remainingApplicants;
+  // todo: should probably rewrite as, "membersToRemove" "applicantsToRemove" etc
+
+  db.Project.findOneAndUpdate(
+    { _id: id },
+    {
+      description: description,
+      members: remainingMembers,
+      applicants: remainingApplicants,
+    },
+    {
+      new: true,
+    }
+  ).then();
 });
 
 router.put("/voteOnProject/:id", (req, res) => {
   // attach so and so's name to the arr of ppl who voted for it
   let projectId = req.query.id;
   const voter = req.body.voter;
-  // stopping for sleep
+  // TODO: finish
 });
 
 router.put("/updateProject/addApplicant", async (req, res) => {
   // so someone can add an applicant to a project
   let projectId = req.body.id;
   let applicantToAdd = req.body.newApplicant;
-  let projectToUpdate = await db.Project.findOne({ _id: projectId });
+  let projectToUpdate = await db.Project.findOne({ externalId: projectId });
   projectToUpdate.applicants.push(applicantToAdd);
   projectToUpdate.save();
   res.status(200).send("successful update");
+  // TODO: test either via postman or actual tests
 });
 
 router.put("/updateProject/convertApplicantToMember", async (req, res) => {
@@ -68,7 +98,7 @@ router.put("/updateProject/convertApplicantToMember", async (req, res) => {
 router.delete("/deleteProject/:projectId", (req, res) => {
   let authorizedUser = req.body.authorizedUser;
   let signedAuth = req.body.signedAuth;
-  db.Projects.findOneAndDelete(
+  db.Project.findOneAndDelete(
     {
       projectOwner: authorizedUser,
       authLine: signedAuth,
@@ -86,6 +116,18 @@ router.delete("/deleteProject/:projectId", (req, res) => {
       }
     }
   );
+});
+
+router.delete("/deleteById", (req, res) => {
+  // just for testing purposes
+  const id = req.body._id;
+  db.Project.findOneAndDelete({ _id: id }, function (err, deleted) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send("deleted!");
+    }
+  });
 });
 
 module.exports = router;

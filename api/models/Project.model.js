@@ -5,9 +5,13 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const projectSchema = new Schema({
+  externalId: Number,
+  name: String,
+  description: String,
+  createdAt: Date,
+  projectOwner: String,
   members: [{ type: String }],
   applicants: [{ type: String }],
-  description: String,
   signatures: [{ type: String }],
 });
 

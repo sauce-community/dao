@@ -13,4 +13,4 @@ const proposalSchema = new Schema({
   createdOn: Date,
 });
 
-module.exports = mongoose.model("Project", proposalSchema);
+module.exports = mongoose.model("Proposal", proposalSchema);

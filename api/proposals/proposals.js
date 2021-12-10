@@ -5,7 +5,7 @@ const db = require("../db");
 
 router.get("/proposals", (req, res) => {
   let startedAt = req.body.startedAt; // for pagination.
-  db.Proposals.find({ createdOn: { $lte: startedAt } })
+  db.Proposal.find({ createdOn: { $lte: startedAt } })
     .sortBy("-createdOn")
     .limit(20)
     .then((proposals) => {
@@ -20,7 +20,7 @@ router.get("/proposals", (req, res) => {
 router.get("/proposal", (req, res) => {
   let number = req.params.number;
   console.log(number, 22);
-  db.Proposals.findOne({ externalId: number }, function (err, successDoc) {
+  db.Proposal.findOne({ externalId: number }, function (err, successDoc) {
     if (err) {
       console.log(err);
     } else {
@@ -36,7 +36,7 @@ router.post("/proposal", (req, res) => {
   let voteProgress = 1;
   let createdOn = Date.now();
 
-  db.Proposals.create(
+  db.Proposal.create(
     {
       proposalName: proposalName,
       description: description,
@@ -57,7 +57,7 @@ router.post("/proposal", (req, res) => {
 router.delete("/proposal", (req, res) => {
   let proposalName = req.body.proposalName;
 
-  db.Proposals.findOneAndDelete(
+  db.Proposal.findOneAndDelete(
     { proposalName: proposalName },
     function (err, deleted) {
       if (err) {
@@ -68,3 +68,5 @@ router.delete("/proposal", (req, res) => {
     }
   );
 });
+
+module.exports = router;
