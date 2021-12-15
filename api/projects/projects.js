@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require("../db");
 
 // #11 - View Projects Page
-router.get("/viewAllProjects", (req, res) => {
+router.get("/projects", (req, res) => {
   // get projects from the db return them showing their data.
   let startedAt = req.body.startedAt; // for pagination.
   db.Project.find({ createdOn: { $lte: startedAt } })
@@ -15,7 +15,7 @@ router.get("/viewAllProjects", (req, res) => {
     });
 });
 
-router.get("/viewProjectApplicants/:id", (req, res) => {
+router.get("/projects/applicants/:id", (req, res) => {
   // view list of all the project's applicants
   // TODO: review and test this route
   let projectId = req.query.id;
@@ -26,7 +26,7 @@ router.get("/viewProjectApplicants/:id", (req, res) => {
 });
 
 // #12 Create Project
-router.post("/createProject", async (req, res) => {
+router.post("/projects", async (req, res) => {
   // it takes a founder or founder(s) to make a project
   let founder = req.body.founder;
   let name = req.body.name;
@@ -47,8 +47,7 @@ router.post("/createProject", async (req, res) => {
 });
 
 // #13 Edit Project
-
-router.put("/editProject", (req, res) => {
+router.put("/project", (req, res) => {
   let id = req.body._id;
   let description = req.body.description;
   let remainingMembers = req.body.remainingMembers;
@@ -74,14 +73,14 @@ router.put("/editProject", (req, res) => {
     });
 });
 
-router.put("/voteOnProject/:id", (req, res) => {
+router.put("/project/:id", (req, res) => {
   // attach so and so's name to the arr of ppl who voted for it
   let projectId = req.query.id;
   const voter = req.body.voter;
   // TODO: finish
 });
 
-router.put("/updateProject/addApplicant", async (req, res) => {
+router.put("/project/add", async (req, res) => {
   // so someone can add an applicant to a project
   let projectId = req.body.id;
   let applicantToAdd = req.body.newApplicant;
@@ -92,8 +91,8 @@ router.put("/updateProject/addApplicant", async (req, res) => {
   // TODO: test either via postman or actual tests
 });
 
-router.put("/updateProject/convertApplicantToMember", async (req, res) => {
-  // so someone who was previously an applicatn can be converted to a member status
+router.put("/update/convert", async (req, res) => {
+  // so someone who was previously an application can be converted to a member status
   let projectId = req.body.id;
   let promotionTarget = req.body.promotionTarget;
   let projectToUpdate = await db.Project.updateOne(
@@ -106,6 +105,7 @@ router.put("/updateProject/convertApplicantToMember", async (req, res) => {
 });
 
 router.delete("/deleteProject/:projectId", (req, res) => {
+  // hypothetical route
   let authorizedUser = req.body.authorizedUser;
   let signedAuth = req.body.signedAuth;
   db.Project.findOneAndDelete(
