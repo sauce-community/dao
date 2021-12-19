@@ -8,9 +8,10 @@ router.get("/proposals", (req, res) => {
   // I hesitated to consider this the best way to do it, but StackOverflow says it's what you do.
   // https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
   db.Proposal.find({ createdOn: { $lte: startedAt } })
-    .sortBy("-createdOn")
+    .sort("-createdOn")
     .limit(20)
     .then((proposals) => {
+      console.log(14, proposals);
       res.status(200).json(proposals);
     })
     .catch((err) => {
@@ -41,8 +42,11 @@ router.post("/proposal", (req, res) => {
   let voteProgress = 1;
   let createdOn = Date.now();
 
+  let externalId = Math.floor(Math.random() * 10000);
+
   db.Proposal.create(
     {
+      externalId: externalId,
       proposalName: proposalName,
       description: description,
       authorAddress: authorAddress,

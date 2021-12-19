@@ -10256,7 +10256,7 @@
     "uuid" "^8.3.1"
     "yauzl" "^2.10.0"
 
-"mongodb-memory-server@7.3.6":
+"mongodb-memory-server@^7.3.6", "mongodb-memory-server@7.3.6":
   "integrity" "sha512-JfuY7uJD9TZxq6C4YVuCjiP2v0V/NYb19Wki6rFovdJvkgxGp5/KXKaazu47leECYAtJc2ajW1c009M3hRM+6A=="
   "resolved" "https://registry.npmjs.org/mongodb-memory-server/-/mongodb-memory-server-7.3.6.tgz"
   "version" "7.3.6"

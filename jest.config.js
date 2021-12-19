@@ -28,5 +28,4 @@ module.exports = {
     "/node_modules/",
     "^.+\\.module\\.(css|sass|scss)$",
   ],
-  preset: "@shelf/jest-mongodb",
 };
