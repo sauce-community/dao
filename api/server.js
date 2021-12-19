@@ -1,17 +1,8 @@
-const express = require("express");
+const app = require("./app");
+// app exported to its own file
+// so supertest can import and use "app" without causing it to start .listening
 
-const app = express();
 const port = 3000;
-
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("foo");
-});
-
-app.use("/api/gov", require("./proposals/proposals"));
-app.use("/api", require("./projects/projects"));
-app.use("/api", require("./applications/applications"));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

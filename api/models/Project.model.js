@@ -1,4 +1,3 @@
-const { string } = require("hardhat/internal/core/params/argumentTypes");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;

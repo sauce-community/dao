@@ -5,6 +5,8 @@ const db = require("../db");
 
 router.get("/proposals", (req, res) => {
   let startedAt = req.body.startedAt; // for pagination.
+  // I hesitated to consider this the best way to do it, but StackOverflow says it's what you do.
+  // https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
   db.Proposal.find({ createdOn: { $lte: startedAt } })
     .sortBy("-createdOn")
     .limit(20)
@@ -19,6 +21,9 @@ router.get("/proposals", (req, res) => {
 
 router.get("/proposal", (req, res) => {
   let number = req.params.number;
+  // Question: Would it be bad practice to send the MongoDB objectId field to the frontend?
+  // I could use that instead of an externalId and save a few lines.
+  // See the .findOne query field.
   console.log(number, 22);
   db.Proposal.findOne({ externalId: number }, function (err, successDoc) {
     if (err) {

@@ -1,8 +1,8 @@
-// const config = require("../config.json");
+const config = require("./config.json");
 const mongoose = require("mongoose");
 
 // mongoose.connect(, connectionOptions);
-mongoose.connect("mongodb://localhost:27017/myapp");
+mongoose.connect(config.developmentDatabaseString);
 
 module.exports = {
   User: require("./models/User.model"),
