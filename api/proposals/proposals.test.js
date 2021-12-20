@@ -23,8 +23,6 @@ const proposals = [
 ];
 
 describe("Proposals Endpoints", () => {
-  let mongoServer;
-
   beforeEach(async () => {
     for (const p of proposals) {
       const proposal = new Proposal(p);
@@ -62,8 +60,8 @@ describe("Proposals Endpoints", () => {
     // TODO: this test ought to test that the returned proposals really were created before the picked startedAt date.
     const laterRes = await request(app)
       .get("/api/gov/proposals")
-      .send({ startedAt: res.body[0].createdOn });
-    console.log(laterRes.body, 66, laterRes.body.length);
+      .send({ startedAt: res.body[res.body.length - 1].createdOn });
+    // console.log(laterRes.body, 66, laterRes.body.length);
     expect(laterRes.statusCode).toEqual(200);
     expect(laterRes.body.length).toBeGreaterThanOrEqual(1);
   });

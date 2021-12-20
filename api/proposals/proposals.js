@@ -56,9 +56,9 @@ router.get("/proposal", (req, res) => {
   // See the .findOne query field.
   db.Proposal.findOne({ externalId: number }, function (err, successDoc) {
     if (err) {
-      console.log(36, err);
+      // console.log(36, err);
     } else {
-      console.log(39, successDoc);
+      // console.log(39, successDoc);
       res.status(200).json(successDoc);
     }
   });
@@ -73,7 +73,7 @@ router.post("/proposal", (req, res) => {
     description === undefined ||
     authorAddress === undefined
   ) {
-    console.log(req.body, 54);
+    // console.log(req.body, 54);
     res.status(400).send();
     return;
   }
@@ -94,7 +94,7 @@ router.post("/proposal", (req, res) => {
     },
     function (err, created) {
       if (err) {
-        console.log(err);
+        // console.log(err);
         res.status(400).send(err);
       } else {
         // console.log(66, created);
@@ -111,7 +111,7 @@ router.delete("/proposal", (req, res) => {
     { proposalName: proposalName },
     function (err, deletedDoc) {
       if (err) {
-        console.log(err);
+        // console.log(err);
         res.status(400).send();
       } else {
         res.status(200).json(deletedDoc);
