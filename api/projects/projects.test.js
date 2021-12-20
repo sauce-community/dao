@@ -93,18 +93,7 @@ describe("Projects endpoints", () => {
     expect(res.body.members.sort()).toEqual(["Marle", "Lucca"].sort());
   });
 
-  it("adds an applicant to the list", async () => {
-    // FIXME:
-    // thrown: "Exceeded timeout of 5000 ms for a test.                                                                             -
-    // Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
-    // let route = "/api/project/add";
-    // let newApplicant = {
-    //   newApplicant: "Frog",
-    // };
-    // let res = await request(app).put(route).send(newApplicant);
-    // expect(res.statusCode).toBe(200);
-    // expect(res.body.applicants).toContain("Frog");
-  });
+  //   it("adds an applicant to the list", async () => {});
 
   it("400s when there is malformed input", async () => {
     // lots of ways to write a faulty object, we'll test an empty one.
