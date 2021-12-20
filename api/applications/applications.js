@@ -4,11 +4,11 @@ const router = express.Router();
 
 const db = require("../db");
 
-router.get("/:application", (req, res) => {
+router.get("/applications/:application", (req, res) => {
   // allow user to check the status of his application to a project
 });
 
-router.post("/:application", (req, res) => {
+router.post("applications/:application", (req, res) => {
   //
 });
 

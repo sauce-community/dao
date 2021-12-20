@@ -5,7 +5,7 @@ const Project = require("../models/Project.model.js");
 
 const projects = [
   {
-    externalId: 123,
+    externalId: 808,
     name: "foo",
     description: "bar",
     projectOwner: "baz",
@@ -52,16 +52,16 @@ describe("Projects endpoints", () => {
     expect(laterRes.body.length).toBeLessThanOrEqual(20);
   });
 
-  it("GETs the applicants of a specified project", () => {
-    let projectId = 12345;
-    let res = request(app)
-      .get("/api/project/applicants/" + projectId.toString())
-      .send();
+  it("GETs the applicants of a specified project", async () => {
+    let testProjectId = 123;
+    let applicantsRoute = "/api/project/applicants/" + testProjectId.toString();
+    console.log(applicantsRoute, 58);
+    let res = await request(app).get(applicantsRoute).send();
     expect(res.statusCode).toBe(200);
-    expect(res.body).toContain("externalId", projectId);
-    expect(res.body).toContain("name");
-    expect(res.body).toContain("description");
-    expect(res.body).toContain("projectOwner");
+    expect(res.body).toHaveProperty("applicants");
+    expect(res.body).toHaveProperty("externalId", testProjectId);
+    expect(res.body).toHaveProperty("description");
+    expect(res.body).toHaveProperty("projectOwner");
   });
 
   it("POSTs a new project", async () => {
@@ -78,9 +78,37 @@ describe("Projects endpoints", () => {
     expect(res.text).toBe(successString);
   });
 
+  it("updates a project doc correctly", async () => {
+    // todo
+    let route = "/api/project";
+    let update = {
+      externalId: 123,
+      description: "a new description",
+      remainingMembers: ["Marle", "Lucca"],
+      remainingApplicants: [],
+    };
+    let res = await request(app).put(route).send(update);
+    expect(res.statusCode).toBe(200);
+    // this should be the case regardless of how many members there were before the update
+    expect(res.body.members.sort()).toEqual(["Marle", "Lucca"].sort());
+  });
+
+  it("adds an applicant to the list", async () => {
+    // FIXME:
+    // thrown: "Exceeded timeout of 5000 ms for a test.                                                                             -
+    // Use jest.setTimeout(newTimeout) to increase the timeout value, if this is a long-running test."
+    // let route = "/api/project/add";
+    // let newApplicant = {
+    //   newApplicant: "Frog",
+    // };
+    // let res = await request(app).put(route).send(newApplicant);
+    // expect(res.statusCode).toBe(200);
+    // expect(res.body.applicants).toContain("Frog");
+  });
+
   it("400s when there is malformed input", async () => {
-    let res = await request(app).post("/project").send();
+    // lots of ways to write a faulty object, we'll test an empty one.
+    let res = await request(app).post("/api/project").send({});
     expect(res.statusCode).toBe(400);
-    //FIXME
   });
 });
