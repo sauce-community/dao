@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require("../db");
 
 router.get("/", (req, res) => {
-  console.log(7);
+  // console.log(7);
   res.status(200).send();
 });
 
@@ -17,26 +17,28 @@ router.get("/proposals", (req, res) => {
       .sort("-createdOn")
       .limit(20)
       .then((proposals) => {
-        console.log(14, proposals);
+        // console.log(14, proposals);
         res.status(200).json(proposals);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         res.status(400).send(err);
       });
   } else {
     // I hesitated to consider this the best way to do it, but StackOverflow says it's what you do.
     // https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
     db.Proposal.find({ createdOn: { $lte: startedAt } })
-      // the idea is that the frontend stores the creation date to use for the next request
+      // the idea is that the frontend stores the creation date to use for the next request.
+      // If the frontend received dates between 01/01/2019 and 02/02/2019, the next query should
+      // get dates between, say, 11/01/2018 and 12/01/2018
       .sort("-createdOn")
       .limit(20)
       .then((proposals) => {
-        console.log(14, proposals);
+        // console.log(14, proposals);
         res.status(200).json(proposals);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         res.status(400).send(err);
       });
   }
@@ -44,19 +46,17 @@ router.get("/proposals", (req, res) => {
 
 router.get("/proposal", (req, res) => {
   let number = req.query.number;
-  let onlyNumbers = +number; // turns into NaN if any non-numeric values are present
-  if (onlyNumbers === NaN) {
+  let onlyNumbers = +number; // turns into NaN if any non-numeric values are present; otherwise converts to int
+  if (onlyNumbers == NaN) {
     res.status(400).send();
     return;
   }
   // Question: Would it be bad practice to send the MongoDB objectId field to the frontend?
   // I could use that instead of an externalId and save a few lines.
   // See the .findOne query field.
-  console.log(number, 22);
   db.Proposal.findOne({ externalId: number }, function (err, successDoc) {
     if (err) {
       console.log(36, err);
-      console.log(err);
     } else {
       console.log(39, successDoc);
       res.status(200).json(successDoc);
@@ -97,7 +97,7 @@ router.post("/proposal", (req, res) => {
         console.log(err);
         res.status(400).send(err);
       } else {
-        console.log(66, created);
+        // console.log(66, created);
         res.status(200).json(created);
       }
     }
@@ -109,11 +109,12 @@ router.delete("/proposal", (req, res) => {
 
   db.Proposal.findOneAndDelete(
     { proposalName: proposalName },
-    function (err, deleted) {
+    function (err, deletedDoc) {
       if (err) {
         console.log(err);
+        res.status(400).send();
       } else {
-        res.status(200).send("successfully deleted " + proposalName);
+        res.status(200).json(deletedDoc);
       }
     }
   );

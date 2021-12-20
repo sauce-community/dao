@@ -33,7 +33,7 @@ describe("Proposals Endpoints", () => {
   });
 
   afterEach(async () => {
-    await Proposal.deleteMany({});
+    Proposal.deleteMany({});
   });
 
   it("works for the blank route", async () => {
@@ -53,21 +53,19 @@ describe("Proposals Endpoints", () => {
   });
 
   it("GET should return a batch of proposals", async () => {
-    //
-    const oneYearPrior = new Date();
-    oneYearPrior.setFullYear(oneYearPrior.getFullYear() - 1);
-    console.log(oneYearPrior, 66);
-    // set one year in the past so the query's $lte has something to be less than or equal to chronologically
-    const res = await request(app)
-      .get("/api/gov/proposals")
-      .send({ startedAt: oneYearPrior });
-
+    const res = await request(app).get("/api/gov/proposals").send({});
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toBeTruthy(); // containing n > 0 json proposals.
-
     expect(res.body.length).toBeGreaterThanOrEqual(1);
     expect(res.body[0]).toHaveProperty("proposalName");
     expect(res.body[0]).toHaveProperty("description");
+
+    // TODO: this test ought to test that the returned proposals really were created before the picked startedAt date.
+    const laterRes = await request(app)
+      .get("/api/gov/proposals")
+      .send({ startedAt: res.body[0].createdOn });
+    console.log(laterRes.body, 66, laterRes.body.length);
+    expect(laterRes.statusCode).toEqual(200);
+    expect(laterRes.body.length).toBeGreaterThanOrEqual(1);
   });
 
   it("GET Retrieves a proposal by its external id number", async () => {
@@ -84,9 +82,14 @@ describe("Proposals Endpoints", () => {
     // expect(res.body).toHaveProperty(externalId);
     expect(createNewProposal.statusCode).toBe(400);
     // TODO: show a few more ways to generate malformed inputs
+  });
 
-    const getProposal = await request(app).get(
-      "/api/gov/proposal?number=abcde6"
-    ); // numerical values only
+  it("deletes a document by its proposalName", async () => {
+    const deletedProposalName = "foo";
+    let res = await request(app)
+      .delete("/api/gov/proposal")
+      .send({ proposalName: deletedProposalName });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.proposalName).toEqual(deletedProposalName);
   });
 });
