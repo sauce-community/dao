@@ -24,7 +24,10 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "bootstrap-icons": "^1.7.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.14",
     "next": "12.0.3",
     "react": "17.0.2",
     "react-dom": "17.0.2"
@@ -53,6 +56,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.3.1",
     "lint-staged": "^12.0.2",
+    "nodemon": "^2.0.15",
     "postcss": "^8.3.11",
     "postcss-loader": "^6.2.0",
     "postcss-preset-env": "^6.7.0",
