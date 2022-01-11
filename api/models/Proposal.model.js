@@ -1,9 +1,8 @@
-const { string } = require("hardhat/internal/core/params/argumentTypes");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
+// externalId, proposalName, description, authorAddress, voteProgress, createdOn
 const proposalSchema = new Schema({
   externalId: Number,
   proposalName: String,

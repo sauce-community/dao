@@ -7,40 +7,88 @@ const db = require("../db");
 router.get("/projects", (req, res) => {
   // get projects from the db return them showing their data.
   let startedAt = req.body.startedAt; // for pagination.
-  db.Project.find({ createdOn: { $lte: startedAt } })
-    .sortBy("-createdOn")
-    .limit(20)
-    .then((projects) => {
-      res.status(200).json(projects);
+  let firstRequest = startedAt === undefined;
+  // console.log(startedAt, 11);
+  if (firstRequest) {
+    db.Project.find({})
+      .sort("-createdOn")
+      .limit(20)
+      .then((projects) => {
+        res.status(200).json(projects);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    db.Project.find({ createdOn: { $lte: startedAt } })
+      .sort("-createdOn")
+      .limit(20)
+      .then((projects) => {
+        res.status(200).json(projects);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+});
+
+router.get("/project/:id", (req, res) => {
+  let externalId = req.params.id;
+  console.log(externalId, 37);
+  db.Project.findOne({ externalId: externalId })
+    .then((project) => {
+      let projectApplicants = project.applicants;
+      res.status(200).json(projectApplicants);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
-router.get("/projects/applicants/:id", (req, res) => {
+// view list of applicants by querying project id
+router.get("/project/applicants/:projectId", (req, res) => {
   // view list of all the project's applicants
   // TODO: review and test this route
-  let projectId = req.query.id;
-  db.Project.findOne({ _id: projectId }).then((project) => {
-    let projectApplicants = project.applicants;
-    res.status(200).json(projectApplicants);
-  });
+  let externalProjectId = req.params.projectId;
+  console.log(externalProjectId, 38);
+  db.Project.findOne({ externalId: externalProjectId })
+    // Note: the function that creates a unique project id is still a TODO,
+    // so there are many projects with the same externalId
+    .then((project) => {
+      res.status(200).json(project);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 // #12 Create Project
-router.post("/projects", async (req, res) => {
+router.post("/project", async (req, res) => {
   // it takes a founder or founder(s) to make a project
   let founder = req.body.founder;
   let name = req.body.name;
   let description = req.body.description;
+  console.log(req.body, 54);
+  if (
+    founder === undefined ||
+    name === undefined ||
+    description === undefined
+  ) {
+    console.log(req.body, 54);
+    res.status(400).send();
+    return;
+  }
   console.log(founder, name, description, 29);
   let newProject = await db.Project.create({
     name: name,
     description: description,
     projectOwner: founder,
-    members: founder,
+    members: [],
     applicants: [],
     signatures: [],
     createdAt: Date.now(),
   });
+  newProject.members.push(founder);
   newProject.save();
   const success = "project created successfully by " + founder;
   res.status(200).send(success);
@@ -48,14 +96,14 @@ router.post("/projects", async (req, res) => {
 
 // #13 Edit Project
 router.put("/project", (req, res) => {
-  let id = req.body._id;
+  let externalId = req.body.externalId;
   let description = req.body.description;
   let remainingMembers = req.body.remainingMembers;
   let remainingApplicants = req.body.remainingApplicants;
   // todo: should probably rewrite as, "membersToRemove" "applicantsToRemove" etc
-
+  console.log(req.body, 88);
   db.Project.findOneAndUpdate(
-    { _id: id },
+    { externalId: externalId },
     {
       description: description,
       members: remainingMembers,
@@ -82,9 +130,10 @@ router.put("/project/:id", (req, res) => {
 
 router.put("/project/add", async (req, res) => {
   // so someone can add an applicant to a project
-  let projectId = req.body.id;
+  let externalId = req.body.externalId;
   let applicantToAdd = req.body.newApplicant;
-  let projectToUpdate = await db.Project.findOne({ externalId: projectId });
+  console.log(135, externalId);
+  let projectToUpdate = await db.Project.findOne({ externalId: externalId });
   projectToUpdate.applicants.push(applicantToAdd);
   projectToUpdate.save();
   res.status(200).send("successful update");
@@ -96,6 +145,7 @@ router.put("/update/convert", async (req, res) => {
   let projectId = req.body.id;
   let promotionTarget = req.body.promotionTarget;
   let projectToUpdate = await db.Project.updateOne(
+    // fixme: this is untested & I smell a bug here
     { _id: projectId },
     { $pullAll: { applicants: [promotionTarget] } }
   );
